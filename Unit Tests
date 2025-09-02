@@ -1,0 +1,13 @@
+"""
+Unit tests for the main.py application.
+"""
+import pytest
+from main import greet
+
+def test_greet():
+    """
+    Test case for the greet function.
+    """
+    assert greet("World") == "Hello, World!"
+    assert greet("CI/CD") == "Hello, CI/CD!"
+    assert greet("Jenkins") != "Hello, Python!"
