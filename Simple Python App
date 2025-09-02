@@ -1,0 +1,18 @@
+"""
+A simple Python application that greets a name.
+"""
+
+def greet(name):
+    """
+    Returns a greeting message for the given name.
+
+    Args:
+        name (str): The name to greet.
+
+    Returns:
+        str: The greeting message.
+    """
+    return f"Hello, {name}!"
+
+if __name__ == "__main__":
+    print(greet("Jenkins Pipeline"))
