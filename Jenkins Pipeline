@@ -1,23 +1,13 @@
-// This is a declarative Jenkins Pipeline for a Python project.
-// It uses a Docker agent to ensure a consistent build environment.
-
-pipeline {
-// The agent directive specifies where the pipeline will run.
-// Using a Docker image for a specific Python version ensures
-// the environment is consistent and reproducible.
-agent {
-docker {
-image 'python:3.9-slim'
-}
-}
-
 // The `stages` block contains the different stages of our CI/CD process.
 stages {
-    // Stage 1: Build
-    // This stage installs the required Python dependencies.
-    stage('Build') {
+    // Stage 1: Setup
+    // This stage ensures Python and its dependencies are available.
+    // It's a good practice to use a virtual environment.
+    stage('Setup') {
         steps {
-            echo 'Building the project...'
+            echo 'Setting up the environment...'
+            sh 'python3 -m venv venv'
+            sh '. venv/bin/activate'
             sh 'pip install -r requirements.txt'
         }
     }
@@ -27,15 +17,13 @@ stages {
     stage('Test') {
         steps {
             echo 'Running tests...'
+            sh '. venv/bin/activate'
             sh 'pytest'
         }
     }
 
     // Stage 3: Deploy
     // This stage simulates the deployment process.
-    // In a real-world scenario, this would contain commands
-    // to deploy the application to a server (e.g., via SSH,
-    // Docker, Kubernetes, etc.).
     stage('Deploy') {
         steps {
             echo 'Deploying the application...'
@@ -57,6 +45,4 @@ post {
     failure {
         echo 'Pipeline failed. Check the logs for details.'
     }
-}
-
 }
